@@ -10,9 +10,11 @@ import Navbar from './components/Navbar/Navbar';
 
 function App() {
   let [fetchedData, updateFetchedData] = useState([]);
+  let [pageNumber, updatePageNumber] = useState(1);
+  let [search, setSearch] = useState('');
   let { info, results } = fetchedData;
 
-  let api = `https://rickandmortyapi.com/api/character/?page=1`;
+  let api = `https://rickandmortyapi.com/api/character/?page=${pageNumber}&name=${search}`;
 
   useEffect(() => {
     (async function () {
@@ -24,12 +26,18 @@ function App() {
   return (
     <div className="App">
       <h1 className="text-center mb-3">Characters</h1>
+      <Search setSearch={setSearch} updatePageNumber={updatePageNumber} />
       <div className="container">
         <div className="row">Filter component will be placed here</div>
         <div className="row">
           <Card results={results} />
         </div>
       </div>
+      <Pagination
+        info={info}
+        pageNumber={pageNumber}
+        updatePageNumber={updatePageNumber}
+      />
     </div>
   );
 }
